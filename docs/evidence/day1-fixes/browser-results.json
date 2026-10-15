@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Docker seed CLI executes and repeats without duplication",
+    "Docker seed preserves January totals when seeding February",
+    "Desktop edit preserves 1.23 instead of multiplying it to 123",
+    "UI rejects excessive money precision before writing",
+    "Both tabs synchronize to B and remove A data before B writes",
+    "503 during session restoration preserves token and retry succeeds",
+    "Mobile four-route navigation and fractional create/edit roundtrip",
+    "Invalid token logs out both tabs and removes private views"
+  ],
+  "page_errors": []
+}

@@ -1,0 +1,48 @@
+
+> so-chi-tieu-web@0.1.0 test
+> vitest run --coverage
+
+
+ RUN  v4.1.11 C:/Users/LENOVO/Expense_Management_AI_Lite/frontend
+      Coverage enabled with v8
+
+
+ Test Files  6 passed (6)
+      Tests  65 passed (65)
+   Start at  17:40:01
+   Duration  12.82s (transform 557ms, setup 1.99s, import 1.70s, tests 14.36s, environment 3.73s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   92.73 |    79.81 |   91.16 |   96.89 |                   
+ src/auth          |   95.55 |    88.88 |   93.33 |     100 |                   
+  AuthContext.tsx  |   94.28 |    83.33 |    90.9 |     100 | 51,63-95          
+ src/components    |   83.72 |    63.04 |    91.3 |   85.13 |                   
+  ...ionStatus.tsx |      80 |       50 |   66.66 |    90.9 | 22                
+  SidePanel.tsx    |      75 |    54.54 |     100 |   73.68 | 43-52             
+  ThemeToggle.tsx  |     100 |     87.5 |     100 |     100 | 9                 
+ ...omponents/auth |     100 |    73.33 |     100 |     100 |                   
+  ...mControls.tsx |     100 |    73.33 |     100 |     100 | 22-24,33          
+ src/lib           |   98.01 |    87.87 |   95.34 |   98.88 |                   
+  api.ts           |     100 |    91.52 |     100 |     100 | 36,70-121         
+  categoryIcons.ts |     100 |       25 |     100 |     100 | 73                
+  dates.ts         |   95.65 |      100 |   88.88 |     100 |                   
+  format.ts        |   88.88 |      100 |      75 |   85.71 | 12                
+ src/pages         |   94.06 |    81.16 |   91.86 |   97.82 |                   
+  ...oriesPage.tsx |   96.66 |    90.66 |   93.61 |   97.91 | 161,168           
+  ...boardPage.tsx |      98 |    85.96 |   97.77 |     100 | ...05,114-115,248 
+  ReportsPage.tsx  |   93.75 |    69.14 |     100 |     100 | ...10-350,363-419 
+  ...tionsPage.tsx |   91.88 |    81.77 |    86.5 |   96.15 | ...63-474,506,513 
+ src/pages/auth    |   79.41 |    58.62 |   66.66 |   96.36 |                   
+  LoginPage.tsx    |    86.2 |    69.23 |      75 |      96 | 32                
+  RegisterPage.tsx |   74.35 |       50 |      60 |   96.66 | 33                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 92.73% ( 919/991 )
+Branches     : 79.81% ( 522/654 )
+Functions    : 91.16% ( 330/362 )
+Lines        : 96.89% ( 780/805 )
+================================================================================

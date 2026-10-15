@@ -1,0 +1,33 @@
+{
+  "verified_at": "2026-10-07T17:49:35.516897+07:00",
+  "host_python": "3.14.6",
+  "node": "v24.8.0",
+  "backend": {
+    "sqlite": {
+      "tests": 56,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 41.757
+    },
+    "postgres": {
+      "tests": 56,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 57.646
+    }
+  },
+  "frontend_passed": 65,
+  "coverage": {
+    "lines": 96.89,
+    "statements": 92.73,
+    "functions": 91.16,
+    "branches": 79.81
+  },
+  "browser_checks": 8,
+  "docker_api_checks": 19,
+  "tested_image": "sha256:f83735eb46af5221f4d4a982b33ffca16e72f0deb7da491c64369a59248f7519",
+  "container_python": "Python 3.13.16",
+  "container_user": "1000"
+}

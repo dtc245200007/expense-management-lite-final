@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:8001",
+  "demo_login": "PASS",
+  "categories": 4,
+  "transactions": 9,
+  "income": "15000000.00",
+  "expense": "3595000.00",
+  "health": 200,
+  "ready": 200
+}

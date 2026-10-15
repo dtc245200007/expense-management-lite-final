@@ -1,0 +1,10 @@
+{
+  "removed_containers": [
+    "app_container",
+    "container"
+  ],
+  "removed_audit_network": true,
+  "removed_private_audit_state": true,
+  "demo_database_untouched": true,
+  "built_audit_image_retained": "expense-lite-day1-fixed:local"
+}

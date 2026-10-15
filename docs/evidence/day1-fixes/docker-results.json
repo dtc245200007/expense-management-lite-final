@@ -1,0 +1,41 @@
+[
+  {
+    "case": "postgres-alembic-upgrade-head",
+    "exit_code": 0,
+    "output": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.migration] Running upgrade  -> 20260901_0001, Create the initial production schema.\nINFO  [alembic.runtime.migration] Running upgrade 20260901_0001 -> 20260925_0002, Add normalized username and email identity keys.\nINFO  [alembic.runtime.migration] Running upgrade 20260925_0002 -> 20260926_0003, Add normalized category names and budget year constraint.\n"
+  },
+  {
+    "case": "postgres-alembic-check",
+    "exit_code": 0,
+    "output": "No new upgrade operations detected.\nINFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.checkconstraint_byname\n"
+  },
+  {
+    "case": "docker-http-/api/health",
+    "status": 200,
+    "content_type": "application/json"
+  },
+  {
+    "case": "docker-http-/api/ready",
+    "status": 200,
+    "content_type": "application/json"
+  },
+  {
+    "case": "docker-http-/",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "case": "docker-http-/transactions",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "case": "docker-non-root",
+    "uid": "1000"
+  },
+  {
+    "case": "docker-seed-module-available",
+    "result": "ModuleSpec(name='scripts', loader=<_frozen_importlib_external.SourceFileLoader object at 0x705209fcce20>, origin='/app/scripts/__init__.py', submodule_search_locations=['/app/scripts'])",
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "Real demo login and desktop dashboard",
+    "Create category and transaction through UI; actual report totals updated",
+    "All four mobile routes reachable at 390 px; no document horizontal overflow",
+    "Logout clears token and protected route redirects to login",
+    "Register and login a fresh account through UI; demo transactions remain private"
+  ],
+  "console_errors": [],
+  "failed_requests": [],
+  "synthetic_account_for_cleanup": "browser_lite_9e45791c",
+  "health": 200,
+  "readiness": 200,
+  "synthetic_account_cleaned_up": true,
+  "final_demo_counts": {
+    "users": 1,
+    "categories": 4,
+    "transactions": 9
+  }
+}

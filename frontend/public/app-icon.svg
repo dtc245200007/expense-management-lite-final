@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Sổ Chi Tiêu">
+  <rect width="512" height="512" rx="112" fill="#003f46"/>
+  <path d="M151 209c19-42 61-70 110-70 24 0 48 7 68 20l48-21v69c14 17 22 38 22 62 0 42-25 78-62 96v37h-52v-25h-69v25h-52v-47c-26-23-42-56-42-93 0-20 5-38 13-55l16 2Z" fill="#f2fffc"/>
+  <path d="M190 187c24-22 66-29 100-14" fill="none" stroke="#2cc58c" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="329" cy="239" r="12" fill="#003f46"/>
+  <path d="M121 242H91v54h42" fill="none" stroke="#2cc58c" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="274" r="48" fill="#07845c"/>
+  <path d="M256 243v62m-22-47c0-11 10-18 22-18 13 0 23 7 23 18 0 12-9 16-23 19-13 3-22 7-22 18 0 12 10 19 23 19 12 0 22-6 24-17" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+</svg>

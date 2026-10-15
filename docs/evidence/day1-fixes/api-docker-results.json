@@ -1,0 +1,96 @@
+[
+  {
+    "case": "register-long-password",
+    "status": 200,
+    "expected": 200
+  },
+  {
+    "case": "wrong-long-password",
+    "status": 401,
+    "expected": 401
+  },
+  {
+    "case": "correct-long-password",
+    "status": 200,
+    "expected": 200
+  },
+  {
+    "case": "create-category",
+    "status": 200,
+    "expected": 200
+  },
+  {
+    "case": "fractional-amount",
+    "status": 200,
+    "expected": 200
+  },
+  {
+    "case": "invalid-money-0.001",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "invalid-money-1.235",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "invalid-money-1000000000000",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "invalid-money-999999999999.999",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "null-transaction-amount",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "null-transaction-category_id",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "null-transaction-txn_date",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "null-category-name",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "null-category-type",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "null-category-color",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "null-category-icon",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "category-type-immutable",
+    "status": 400,
+    "expected": 400
+  },
+  {
+    "case": "username-email-namespace",
+    "status": 422,
+    "expected": 422
+  },
+  {
+    "case": "container-legacy-password-and-timezone-boundaries",
+    "result": "Legacy bcrypt boundary and Vietnamese midnight: PASS"
+  }
+]

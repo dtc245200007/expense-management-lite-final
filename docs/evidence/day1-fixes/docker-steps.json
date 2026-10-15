@@ -1,0 +1,26 @@
+[
+  {
+    "step": "audit_setup_pg.py",
+    "exit_code": 0
+  },
+  {
+    "step": "verify_docker.py",
+    "exit_code": 0
+  },
+  {
+    "step": "verify_browser.py",
+    "exit_code": 0
+  },
+  {
+    "step": "verify_api_docker.py",
+    "exit_code": 0
+  },
+  {
+    "step": "package_verification.py",
+    "exit_code": 0
+  },
+  {
+    "step": "cleanup",
+    "exit_code": 0
+  }
+]

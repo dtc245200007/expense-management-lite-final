@@ -1,0 +1,64 @@
+# Environment variables and local secrets
+.env
+backups/
+.tmp/
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+
+# Test and coverage output
+.coverage
+.coverage.*
+coverage.json
+htmlcov/
+coverage/
+frontend/coverage/
+
+# Local databases and runtime data
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+uploads/
+backups/
+logs/
+*.log
+
+# Frontend dependencies and generated builds
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo
+frontend/.vite/
+
+# Generated project documents and previews (not used by the application)
+deliverables/
+~$*.docx
+
+# Editors and operating systems
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Local AI/tooling state
+.codex/
+.impeccable/
+.tools/
+
+# Local planning notes
+PRODUCT.md
