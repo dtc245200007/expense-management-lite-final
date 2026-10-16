@@ -18,9 +18,9 @@ Giao diện React và API FastAPI được đóng gói trong cùng image. Schema
 
 ## Triển khai hiện tại
 
-Ứng dụng web, PostgreSQL và pgAdmin đã được triển khai, kiểm tra trên Ubuntu VM. Dữ liệu và cấu hình pgAdmin được giữ khi tạo lại container bằng Docker Compose.
+Ứng dụng web, PostgreSQL, pgAdmin và Nginx đã được triển khai, kiểm tra trên Ubuntu VM. Web được truy cập qua HTTPS với chứng chỉ tự ký và security headers. Dữ liệu và cấu hình pgAdmin được giữ khi tạo lại container bằng Docker Compose.
 
-Các phần tiếp theo gồm Nginx/HTTPS, Prometheus/Grafana, Loki/Promtail và hoàn thiện hardening.
+Các phần tiếp theo gồm Prometheus/Grafana, Loki/Promtail và hoàn thiện hardening.
 
 ## Yêu cầu môi trường
 
@@ -75,6 +75,74 @@ docker compose --env-file .env.compose config --quiet
 
 Không đưa mật khẩu, khóa bí mật hoặc nội dung `.env.compose` vào GitHub và ảnh báo cáo. Giữ nguyên các giá trị đã sử dụng khi database được khởi tạo.
 
+## Chuẩn bị HTTPS trên Ubuntu
+
+Khai báo tên truy cập trên chính Ubuntu VM:
+
+```bash
+if ! grep -qE '(^|[[:space:]])expense-lite[.]test([[:space:]]|$)' /etc/hosts; then
+    printf '\n127.0.0.1 expense-lite.test\n' | sudo tee -a /etc/hosts
+fi
+
+getent hosts expense-lite.test
+```
+
+Tạo thư mục chứng chỉ:
+
+```bash
+mkdir -p docker/nginx/certs
+```
+
+Nếu chưa có cặp chứng chỉ, tạo bằng lệnh sau. Giữ nguyên nếu đã tạo:
+
+```bash
+(
+set -e
+umask 077
+
+openssl req -x509 -noenc -newkey rsa:2048 \
+    -sha256 -days 365 \
+    -keyout docker/nginx/certs/expense-lite.test.key \
+    -out docker/nginx/certs/expense-lite.test.crt \
+    -subj "/CN=expense-lite.test" \
+    -addext "subjectAltName=DNS:expense-lite.test,DNS:localhost,IP:127.0.0.1" \
+    -addext "basicConstraints=critical,CA:FALSE"
+
+chmod 600 docker/nginx/certs/expense-lite.test.key
+chmod 644 docker/nginx/certs/expense-lite.test.crt
+)
+```
+
+Thư mục chứng chỉ được Git bỏ qua. File cấu hình Nginx nằm tại `docker/nginx/default.conf`.
+
+Trong `.env.compose`, bảo đảm có:
+
+```dotenv
+TRUSTED_HOSTS=expense-lite.test,localhost,127.0.0.1
+```
+
+Cổng 80 và 443 cần được giải phóng trước khi chạy Nginx bằng Compose.
+
+HTTP tự chuyển sang `https://expense-lite.test`. Trình duyệt cần chấp nhận ngoại lệ cho chứng chỉ tự ký trong môi trường lab.
+
+Kiểm tra HTTPS và API:
+
+```bash
+curl --cacert docker/nginx/certs/expense-lite.test.crt \
+    -sS -D - -o /dev/null https://expense-lite.test/
+
+curl --cacert docker/nginx/certs/expense-lite.test.crt \
+    -fsS https://expense-lite.test/api/ready
+```
+
+Nginx cung cấp các headers `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` và `Permissions-Policy`.
+
+Sau khi sửa file cấu hình Nginx đang được bind mount, có thể tạo lại riêng container để nhận file mới:
+
+```bash
+docker compose --env-file .env.compose up -d --no-deps --force-recreate nginx
+```
+
 ## Build và khởi động
 
 ```bash
@@ -105,10 +173,10 @@ Module tạo tài khoản `demo`, bốn danh mục và chín giao dịch cho th�
 
 Truy cập bằng trình duyệt trong Ubuntu:
 
-- Web: http://localhost:8000
+- Web: https://expense-lite.test
 - pgAdmin: http://localhost:5050
-- Health: http://localhost:8000/api/health
-- Database readiness: http://localhost:8000/api/ready
+- Health: https://expense-lite.test/api/health
+- Database readiness: https://expense-lite.test/api/ready
 
 Đăng nhập web bằng tài khoản `demo`, mật khẩu là giá trị `DEMO_PASSWORD` trong `.env.compose`. Có thể đăng ký tài khoản mới trên giao diện.
 
@@ -133,7 +201,8 @@ Hostname là `postgres` vì kết nối được thực hiện giữa các conta
 
 | Dịch vụ | Image | Cổng trên Ubuntu | Mạng | Lưu trữ |
 |---|---|---|---|---|
-| Web | expense-management-lite:local | 127.0.0.1:8000 | app_net, db_net | Dữ liệu nghiệp vụ trong PostgreSQL |
+| Web | expense-management-lite:local | Nội bộ: 8000 | app_net, db_net | Dữ liệu nghiệp vụ trong PostgreSQL |
+| Nginx | nginx:1.30-alpine | 127.0.0.1:80, 127.0.0.1:443 | app_net | Cấu hình và chứng chỉ mount chỉ đọc |
 | PostgreSQL | postgres:16-alpine | Không công bố | db_net | postgres_data |
 | pgAdmin | dpage/pgadmin4:9.18 | 127.0.0.1:5050 | app_net, db_net | pgadmin_data |
 

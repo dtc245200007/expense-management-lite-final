@@ -23,3 +23,6 @@ frontend/node_modules
 frontend/dist
 frontend/coverage
 frontend/*.tsbuildinfo
+
+# Local HTTPS certificates
+docker/nginx/certs/

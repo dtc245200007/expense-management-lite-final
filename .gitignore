@@ -62,3 +62,6 @@ Desktop.ini
 
 # Local planning notes
 PRODUCT.md
+
+# Local HTTPS certificates
+docker/nginx/certs/
