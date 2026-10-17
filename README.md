@@ -22,6 +22,30 @@ Giao diện React và API FastAPI được đóng gói trong cùng image. Schema
 
 Các phần tiếp theo gồm Prometheus/Grafana, Loki/Promtail và hoàn thiện hardening.
 
+## Giám sát bằng Prometheus và Grafana
+
+Hệ thống sử dụng cAdvisor để thu thập tài nguyên container,
+Nginx Exporter và PostgreSQL Exporter để thu thập số liệu dịch vụ.
+
+Địa chỉ truy cập trên trình duyệt Ubuntu:
+- Prometheus: http://localhost:9090
+- Grafana: http://localhost:3000
+- cAdvisor: http://localhost:8081
+
+Thông tin đăng nhập Grafana được cấu hình bằng
+GRAFANA_ADMIN_USER và GRAFANA_ADMIN_PASSWORD trong .env.compose.
+
+Dashboard “Expense Lite - Giám sát hệ thống” gồm sáu biểu đồ:
+CPU, RAM theo dịch vụ; request và kết nối Nginx;
+kết nối và transaction commit PostgreSQL.
+
+Cấu hình dashboard được xuất theo định dạng Grafana V2 JSON,
+lưu tại docker/grafana/dashboards/expense-lite-overview-v2.json.
+File này là bản xuất để nhập lại khi cần, chưa được cấu hình tự động nạp.
+
+Dữ liệu Prometheus và Grafana được lưu trong các volume
+prometheus_data và grafana_data.
+
 ## Yêu cầu môi trường
 
 - Ubuntu VM có kết nối Internet.
