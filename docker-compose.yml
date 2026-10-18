@@ -1,7 +1,15 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
+    logging: *default-logging
+    mem_limit: 512m
     environment:
       POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
@@ -29,6 +37,12 @@ services:
       dockerfile: Dockerfile
     image: expense-management-lite:local
     restart: unless-stopped
+    logging: *default-logging
+    mem_limit: 256m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     environment:
       APP_ENV: production
       AUTO_CREATE_SCHEMA: "false"
@@ -61,6 +75,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4:9.18
     restart: unless-stopped
+    logging: *default-logging
+    mem_limit: 256m
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:?PGADMIN_DEFAULT_EMAIL is required}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?PGADMIN_DEFAULT_PASSWORD is required}
@@ -80,6 +96,8 @@ services:
   nginx:
     image: nginx:1.30-alpine
     restart: unless-stopped
+    logging: *default-logging
+    mem_limit: 64m
     ports:
       - "127.0.0.1:80:80"
       - "127.0.0.1:443:443"
@@ -97,6 +115,7 @@ services:
   cadvisor:
     image: ghcr.io/google/cadvisor:0.60.6
     restart: unless-stopped
+    logging: *default-logging
     privileged: true
     cgroup: host
     mem_limit: 256m
@@ -121,6 +140,7 @@ services:
   nginx-exporter:
     image: nginx/nginx-prometheus-exporter:1.5.3
     restart: unless-stopped
+    logging: *default-logging
     mem_limit: 64m
     command:
       - --nginx.scrape-uri=http://nginx:8080/stub_status
@@ -132,6 +152,7 @@ services:
   postgres-exporter:
     image: quay.io/prometheuscommunity/postgres-exporter:v0.20.1
     restart: unless-stopped
+    logging: *default-logging
     mem_limit: 128m
     environment:
       DATA_SOURCE_URI: "postgres:5432/${POSTGRES_DB}?sslmode=disable"
@@ -147,6 +168,7 @@ services:
   prometheus:
     image: prom/prometheus:v3.15.0
     restart: unless-stopped
+    logging: *default-logging
     mem_limit: 384m
     command:
       - --config.file=/etc/prometheus/prometheus.yml
@@ -168,6 +190,7 @@ services:
   grafana:
     image: grafana/grafana:13.2.4
     restart: unless-stopped
+    logging: *default-logging
     mem_limit: 384m
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
@@ -188,6 +211,7 @@ services:
   loki:
     image: grafana/loki:3.7.0
     restart: unless-stopped
+    logging: *default-logging
     user: "10001:10001"
     mem_limit: 512m
     command:
@@ -207,6 +231,7 @@ services:
   promtail:
     image: grafana/promtail:3.5.0
     restart: unless-stopped
+    logging: *default-logging
     user: "0:0"
     mem_limit: 128m
     command:

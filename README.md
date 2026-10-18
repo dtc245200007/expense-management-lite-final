@@ -18,9 +18,29 @@ Giao diện React và API FastAPI được đóng gói trong cùng image. Schema
 
 ## Triển khai hiện tại
 
-Ứng dụng web, PostgreSQL, pgAdmin và Nginx đã được triển khai, kiểm tra trên Ubuntu VM. Web được truy cập qua HTTPS với chứng chỉ tự ký và security headers. Dữ liệu và cấu hình pgAdmin được giữ khi tạo lại container bằng Docker Compose.
+Hệ thống đã được triển khai và kiểm tra trên Ubuntu VM bằng Docker Compose,
+gồm 11 dịch vụ: web, PostgreSQL, pgAdmin, Nginx, cAdvisor, Nginx Exporter,
+PostgreSQL Exporter, Prometheus, Grafana, Loki và Promtail.
 
-Loki và Promtail đã được tích hợp để thu thập log tập trung của Nginx, web và PostgreSQL. Các truy vấn LogQL đã được kiểm tra trên Grafana Explore. Phần tiếp theo là hoàn thiện hardening.
+Ứng dụng được truy cập tại https://expense-lite.test thông qua Nginx reverse
+proxy, sử dụng HTTPS với chứng chỉ tự ký và các HTTP security headers.
+Dữ liệu PostgreSQL và cấu hình pgAdmin được lưu trong các named volume.
+
+Prometheus thu thập số liệu container, Nginx và PostgreSQL. Grafana hiển thị
+dashboard gồm sáu biểu đồ giám sát CPU, RAM, request, kết nối và transaction
+commit. Cấu hình dashboard đã được xuất thành file JSON và lưu trong dự án.
+
+Promtail thu thập log của Nginx, web và PostgreSQL rồi gửi về Loki.
+Các truy vấn LogQL đã được kiểm chứng trên Grafana Explore.
+Hướng dẫn được lưu tại docs/logging.md.
+
+Đã áp dụng và kiểm chứng các biện pháp hardening trong phạm vi bài thực hành:
+giới hạn quyền container, tách mạng, bảo vệ thông tin bí mật, phân quyền
+PostgreSQL, HTTPS, giới hạn bộ nhớ và xoay vòng log Docker.
+Chi tiết biện pháp và các ngoại lệ được ghi tại docs/security.md.
+
+Sau khi áp dụng cấu hình, đã kiểm tra lại chức năng ứng dụng, kết nối database,
+dashboard giám sát và khả năng thu thập log mới.
 
 ## Giám sát bằng Prometheus và Grafana
 
@@ -56,6 +76,14 @@ gửi tới Loki để lưu trữ và truy vấn.
 - Thời gian lưu log cấu hình: 24 giờ.
 - Volume dữ liệu: loki_data và promtail_positions.
 - Hướng dẫn kết nối và ba truy vấn minh họa: [docs/logging.md](docs/logging.md).
+
+## Bảo mật hệ thống
+
+Các biện pháp gồm giới hạn quyền container, tách mạng,
+bảo vệ secret, phân quyền PostgreSQL, HTTPS và security headers,
+giới hạn bộ nhớ và xoay vòng log Docker.
+
+Chi tiết và các ngoại lệ: [docs/security.md](docs/security.md).
 
 ## Yêu cầu môi trường
 
