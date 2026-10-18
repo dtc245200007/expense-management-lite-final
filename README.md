@@ -20,7 +20,7 @@ Giao diện React và API FastAPI được đóng gói trong cùng image. Schema
 
 Ứng dụng web, PostgreSQL, pgAdmin và Nginx đã được triển khai, kiểm tra trên Ubuntu VM. Web được truy cập qua HTTPS với chứng chỉ tự ký và security headers. Dữ liệu và cấu hình pgAdmin được giữ khi tạo lại container bằng Docker Compose.
 
-Các phần tiếp theo gồm Prometheus/Grafana, Loki/Promtail và hoàn thiện hardening.
+Loki và Promtail đã được tích hợp để thu thập log tập trung của Nginx, web và PostgreSQL. Các truy vấn LogQL đã được kiểm tra trên Grafana Explore. Phần tiếp theo là hoàn thiện hardening.
 
 ## Giám sát bằng Prometheus và Grafana
 
@@ -45,6 +45,17 @@ File này là bản xuất để nhập lại khi cần, chưa được cấu h�
 
 Dữ liệu Prometheus và Grafana được lưu trong các volume
 prometheus_data và grafana_data.
+
+## Log tập trung với Loki và Promtail
+
+Promtail thu thập log của Nginx, web và PostgreSQL qua Docker API,
+gửi tới Loki để lưu trữ và truy vấn.
+
+- Loki: http://localhost:3100/ready
+- Tra cứu log: Grafana → Explore → chọn datasource loki.
+- Thời gian lưu log cấu hình: 24 giờ.
+- Volume dữ liệu: loki_data và promtail_positions.
+- Hướng dẫn kết nối và ba truy vấn minh họa: [docs/logging.md](docs/logging.md).
 
 ## Yêu cầu môi trường
 

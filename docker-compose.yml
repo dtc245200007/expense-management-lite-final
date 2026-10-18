@@ -185,11 +185,52 @@ services:
     networks:
       - monitor_net
 
+  loki:
+    image: grafana/loki:3.7.0
+    restart: unless-stopped
+    user: "10001:10001"
+    mem_limit: 512m
+    command:
+      - -config.file=/etc/loki/config.yml
+    ports:
+      - "127.0.0.1:3100:3100"
+    volumes:
+      - ./docker/loki/loki.yml:/etc/loki/config.yml:ro
+      - loki_data:/loki
+    networks:
+      - monitor_net
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  promtail:
+    image: grafana/promtail:3.5.0
+    restart: unless-stopped
+    user: "0:0"
+    mem_limit: 128m
+    command:
+      - -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./docker/promtail/promtail.yml:/etc/promtail/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - promtail_positions:/var/lib/promtail
+    depends_on:
+      - loki
+    networks:
+      - monitor_net
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
 volumes:
   prometheus_data:
   grafana_data:
   postgres_data:
   pgadmin_data:
+  loki_data:
+  promtail_positions:
 
 networks:
   app_net:
